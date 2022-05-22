@@ -1,5 +1,5 @@
-from enum import Enum
-from typing import Optional
-from fastapi import FastAPI, Response, status
+from fastapi import FastAPI
+from router import blog_get
 
 app = FastAPI()
+app.include_router(blog_get.router)
