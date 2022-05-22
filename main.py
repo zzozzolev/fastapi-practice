@@ -9,7 +9,7 @@ app = FastAPI()
 #     return {"message": "All blogs provided."}
 
 
-@app.get("/blog/all")
+@app.get("/blog/all", tags=["blog"])
 def get_all_blogs(page, page_size):
     return {"message": f"All {page_size} blogs on page {page}"}
 
@@ -20,12 +20,12 @@ class BlogType(str, Enum):
     howto = "howto"
 
 
-@app.get("/blog/type/{type}")
+@app.get("/blog/type/{type}", tags=["blog"])
 def get_all_blogs(type: BlogType):
     return {"message": f"Blog type {type}"}
 
 
-@app.get("/blog/{id}", status_code=status.HTTP_200_OK)
+@app.get("/blog/{id}", status_code=status.HTTP_200_OK, tags=["blog"])
 def get_blog(id: int, response: Response):
     if id > 5:
         response.status_code = status.HTTP_404_NOT_FOUND
