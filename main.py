@@ -9,7 +9,12 @@ app = FastAPI()
 #     return {"message": "All blogs provided."}
 
 
-@app.get("/blog/all", tags=["blog"])
+@app.get(
+    "/blog/all",
+    tags=["blog"],
+    summary="Retrieve all blogs",
+    description="This api call simulates fetching all blogs.",
+)
 def get_all_blogs(page, page_size):
     return {"message": f"All {page_size} blogs on page {page}"}
 
