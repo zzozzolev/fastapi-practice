@@ -39,3 +39,7 @@ def create_comment(
     content: str = Body(..., min_length=10, max_length=50, regex="^[a-z\s]*$"),
 ):
     return {"blog": blog, "id": id, "comment_id": comment_id, "content": content}
+
+
+def required_functionality():
+    return {"message": "Learning FastAPI is important."}
