@@ -19,6 +19,12 @@ def get_all_users(db: Session = Depends(get_db)):
     return db_user.get_all_users(db)
 
 
+# Read one user
+@router.get("/{id}", response_model=UserDisplay)
+def get_user(id: int, db: Session = Depends(get_db)):
+    return db_user.get_user(db, id)
+
+
 # Update user
 
 # Delete user
