@@ -1,6 +1,7 @@
 from urllib.request import Request
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from exceptions import StoryException
 from router import blog_get, blog_post, user, article, product, file
 from auth import authentication
@@ -25,3 +26,5 @@ def story_exception_handler(request: Request, exc: StoryException):
 
 
 models.Base.metadata.create_all(engine)
+
+app.mount("/files", StaticFiles(directory="files"), name="files")
