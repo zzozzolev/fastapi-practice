@@ -1,4 +1,5 @@
 from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import FileResponse
 import shutil
 
 router = APIRouter(prefix="/files", tags=["file"])
@@ -19,3 +20,8 @@ def get_uploadfile(upload_file: UploadFile = File(...)):
         shutil.copyfileobj(upload_file.file, buffer)
 
     return {"filename": path, "type": upload_file.content_type}
+
+
+@router.get("/download/{name}", response_class=FileResponse)
+def get_file(name: str):
+    return f"files/{name}"
