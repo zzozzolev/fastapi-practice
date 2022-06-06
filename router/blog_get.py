@@ -14,7 +14,9 @@ router = APIRouter(prefix="/blog", tags=["blog"])
     response_description="The list of available blogs.",
 )
 def get_all_blogs(
-    page, page_size, req_parameter: Dict = Depends(required_functionality)
+    page: Optional[int] = 1,
+    page_size: Optional[int] = 5,
+    req_parameter: Dict = Depends(required_functionality),
 ):
     return {"message": f"All {page_size} blogs on page {page}", "req": req_parameter}
 
