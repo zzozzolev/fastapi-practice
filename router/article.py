@@ -2,10 +2,10 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from exceptions import StoryException
-from schemas import ArticleBase, ArticleDisplay
+from schemas import ArticleBase, ArticleDisplay, UserBase
 from db.database import get_db
 from db import db_article
-from auth.oauth2 import oauth2_scheme
+from auth.oauth2 import get_current_user
 
 router = APIRouter(prefix="/article", tags=["article"])
 
@@ -19,9 +19,11 @@ def create_article(request: ArticleBase, db: Session = Depends(get_db)):
 
 
 # Get specific article
-@router.get("/{id}", response_model=ArticleDisplay)
+@router.get("/{id}")  # , response_model=ArticleDisplay)
 def get_article(
-    id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+    id: int,
+    db: Session = Depends(get_db),
+    current_user: UserBase = Depends(get_current_user),
 ):
     article = db_article.get_article(db, id)
 
@@ -31,4 +33,4 @@ def get_article(
             detail=f"Article with id {id} not found.",
         )
 
-    return article
+    return {"data": article, "current_user": current_user}
