@@ -23,8 +23,8 @@ def get_all_users(db: Session):
     return db.query(DBUser).all()
 
 
-def get_user(db: Session, id: int):
-    return db.query(DBUser).filter(DBUser.id == id).first()
+def get_user_by_username(db: Session, username: str):
+    return db.query(DBUser).filter(DBUser.username == username).first()
 
 
 def update_user(db: Session, id: int, request: UserBase):
