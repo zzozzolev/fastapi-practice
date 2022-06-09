@@ -26,5 +26,3 @@ def story_exception_handler(request: Request, exc: StoryException):
 
 
 models.Base.metadata.create_all(engine)
-
-app.mount("/files", StaticFiles(directory="files"), name="files")
