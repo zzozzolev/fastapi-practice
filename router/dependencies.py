@@ -4,8 +4,15 @@ from fastapi.requests import Request
 router = APIRouter(prefix="/dependencies", tags=["dependencies"])
 
 
-def convert_headers(request: Request, separator: str = "--"):
-    return [f"{k} -- {v}" for k, v in request.headers.items()]
+def convert_params(request: Request, separator: str):
+    return [f"{key} {separator} {value}" for key, value in request.query_params.items()]
+
+
+def convert_headers(
+    request: Request, separator: str = "--", query=Depends(convert_params)
+):
+    headers = [f"{k} {separator} {v}" for k, v in request.headers.items()]
+    return {"headers": headers, "query": query}
 
 
 @router.get("")
